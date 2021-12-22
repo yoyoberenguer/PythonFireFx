@@ -69,7 +69,7 @@ shader_fire_effect(
 ```
 
 ## doc 
-[documentation](./PythonFireFx/Doc/html/index.html)
+`Read the Documentation in the folder Doc/html/index.html`
 
 ![fire effect image](PythonFireFx/Assets/FireImage.PNG)
 
