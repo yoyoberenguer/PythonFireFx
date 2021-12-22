@@ -1,0 +1,430 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PythonFireFx &#8212; PygameFireFx 1.0.0 documentation</title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="_static/agogo.css" />
+    <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+    <script src="_static/jquery.js"></script>
+    <script src="_static/underscore.js"></script>
+    <script src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="header-wrapper" role="banner">
+      <div class="header">
+        <div class="headertitle"><a
+          href="#">PygameFireFx 1.0.0 documentation</a></div>
+        <div class="rel" role="navigation" aria-label="related navigation">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a>
+        </div>
+       </div>
+    </div>
+
+    <div class="content-wrapper">
+      <div class="content">
+        <div class="document">
+            
+      <div class="documentwrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="pythonfirefx">
+<h1><code class="xref py py-mod docutils literal notranslate"><span class="pre">PythonFireFx</span></code><a class="headerlink" href="#pythonfirefx" title="Permalink to this headline">¶</a></h1>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<blockquote>
+<div><dl class="py method">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">method</span> <span class="pre">shader_fire_effect:</span></span></dt>
+<dd><div class="line-block">
+<div class="line"><em>Create a fire effect on your game display, surface or sprite texture</em></div>
+<div class="line"><em>shader_fire_effect(surface, width_, height_, factor_, palette_, fire_) -&gt; Surface</em></div>
+<div class="line"><br /></div>
+<div class="line"><strong>Optional arguments</strong></div>
+<div class="line-block">
+<div class="line"><cite>reduce_factor_</cite>        = 3,</div>
+<div class="line"><cite>fire_intensity_</cite>       = 32,</div>
+<div class="line"><cite>smooth_</cite>               = True,</div>
+<div class="line"><cite>bloom_</cite>                = True,</div>
+<div class="line"><cite>fast_bloom_</cite>           = True,</div>
+<div class="line"><cite>bpf_threshold_</cite>        = 0,</div>
+<div class="line"><cite>low_</cite>                  = 0,</div>
+<div class="line"><cite>high_</cite>                 = 600,</div>
+<div class="line"><cite>brightness_</cite>           = True,</div>
+<div class="line"><cite>brightness_intensity_</cite> = 0.15,</div>
+<div class="line"><cite>surface_</cite>              = None,</div>
+<div class="line"><cite>adjust_palette_</cite>       = False,</div>
+<div class="line"><cite>hsl_</cite>                  = (10, 80, 1.8),</div>
+<div class="line"><cite>transpose_</cite>            = False,</div>
+<div class="line"><cite>border_</cite>               = False,</div>
+<div class="line"><cite>blur_</cite>                 = True</div>
+</div>
+</div>
+</dd></dl>
+
+<p>FIRE SHADER EFFECT OPTIONS</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>FIRE TEXTURE SIZES</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>input width_</strong>  : integer,</div>
+<div class="line"><strong>input height_</strong> : integer</div>
+</div>
+<p><cite>width_</cite> and <cite>height_</cite> values define the size of the texture e.g Surface(width x height)</p>
+<ul class="simple">
+<li><p>FIRE ASPECT (CONTROL OVER THE WIDTH):</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>inputs low_</strong> : integer</div>
+<div class="line"><strong>input high_</strong> : integer</div>
+</div>
+<p>Optional arguments <cite>low_</cite> &amp; <cite>high_</cite> (integer values) define the width ‘s limits of the fire effect.
+<cite>low_</cite> for the starting point and <cite>high_</cite> for the ending of the effect.
+e.g <cite>low_</cite> = 10 and <cite>high_</cite> = 200. The fire effect will be contain within width = 10 and 200
+<cite>low_</cite> &amp; <cite>high_</cite> values must be in range [0 … <cite>width_</cite>]</p>
+<ul class="simple">
+<li><p>FIRE HEIGHT:</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>input factor_</strong> : float</div>
+</div>
+<p>The fire maximum height can be adjust with the variable <cite>factor_</cite> (float value)
+value &gt; 3.95 will contain the effect within the display
+value &lt; 3.95 will enlarge the effect over the display height
+Recommended value is 3.95 with <cite>reduce_factor_</cite> = 3 otherwise adjust the value manually
+to contain the fire effect within the display</p>
+<ul class="simple">
+<li><p>SPEED CONSIDERATION</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>input reduce_factor_</strong> : integer</div>
+</div>
+<p>The argument <cite>reduce_factor_</cite> control the size of the texture to be processed
+e.g : a value of 2, divide by 4 the pygame surface define by the values (<cite>width_</cite> &amp; <cite>height_</cite>)
+Smaller texture improve the overall performances but will slightly degrade the fire aspect,
+especially if the blur and smooth option are not enabled.
+Recommended value for <cite>reduce_factor_</cite> is 3 (fast process)
+<cite>reduce_factor_</cite> values must be an integer in range [ 0 … 4]
+The <cite>reduce_factor_</cite> value will have a significant impact on the fire effect maximum height,
+adjust the argument <cite>factor_</cite> accordingly</p>
+<ul class="simple">
+<li><p>FIRE INTENSITY AT THE SOURCE</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>input fire_intensity_</strong>: integer</div>
+</div>
+<p>Set the fire intensity with the variable <cite>fire_intensity_</cite>, 0 low flame,
+32 maximum flame effect
+Values must be an int in range [0 … 32]</p>
+<ul class="simple">
+<li><p>SMOOTHING THE EFFECT</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>input smooth_</strong>: True | False</div>
+</div>
+<p>When <cite>smooth_</cite> is True the algorithm will use the pygame function smoothscale (bi-linear
+filtering) or False the final texture will be adjust with the scale function.
+Set this variable to False if you need the best performance for the effect or if you require
+a pixelated fire effect. Otherwise set the variable to True for a more realistic effect.</p>
+<ul class="simple">
+<li><p>BLOOM EFFECT</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>input bloom_</strong>         : True | False</div>
+<div class="line"><strong>input fast_bloom_</strong>    : True | False</div>
+<div class="line"><strong>input bpf_threshold_</strong> : integer</div>
+</div>
+<p>Fire effect produce a bright and smooth light effect to the background texture where the fire
+intensity is at its maximum.
+Use the flag <cite>fast_bloom_</cite> for a compromise between a realistic effect and the best performances
+The flag <cite>fast_bloom_</cite> define a very fast bloom algo using only the smallest texture
+to create a bloom effect (all the intermediate textures will be bypassed). See the bloom effect
+project for more details.
+When fast_bloom is False, all the sub-surfaces will be blit to the final effect and will
+produce a more realistic fire effect (this will slightly degrade the overall performances).
+If the fire effect is too bright, you can always adjust the bright pass filter value
+<cite>bpf_threshold_`(this will adjust the bloom intensity)
+`bpf_threshold_</cite> value must be in range [ 0 … 255]
+Below 128 the bloom effect will be more noticeable and above 128 only the brightest
+area will be enhanced.</p>
+<ul class="simple">
+<li><p>LIGHT EFFECT INTENSITY</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>input brightness_</strong>            : True | False</div>
+<div class="line"><strong>input brightness_intensity_</strong>  : float</div>
+</div>
+<p>When the flag is set to True, the algorithm will use an external function,
+&lt;shader_brightness24_exclude_inplace_c&gt; to increase the brightness of the effect/texture.
+A custom color can be passed to the function defining the pixels to be ignored during the
+process (default is black color).
+the value must be in range [-1.0 … 1.0]. Values below zero will decrease the brightness
+of the flame effect and positive values will increase the brightness of the effect (causing
+bright white patches on the fire texture).
+Values below -0.4 will cause the fire effect to be translucent and this effect can also be
+used for simulating ascending heat convection effects on a background texture.</p>
+<ul class="simple">
+<li><p>OPTIONAL SURFACE</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>input surface_</strong> : pygame.Surface</div>
+</div>
+<p>This is an optional surface that can be passed to the shader to improve the performances
+and to avoid a new surface to be generated every iterations. The surface size must match
+exactly the reduce texture dimensions otherwise an exception will be raise.
+see <cite>reduce_factor_</cite> option to determine the fire texture size that will be processed.</p>
+<ul class="simple">
+<li><p>COLOR PALETTE ADJUSTMENT</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>input adjust_palette_</strong> : True | False</div>
+<div class="line"><strong>input `hsl_`</strong>            : (10, 80, 1.8)</div>
+</div>
+<p>Set this flag to True to modify the color palette of the fire texture.
+This allow the HSL color model to be apply to the palette values
+You can redefine the palette when the flag is True and by customizing a tuple of 3 float
+values, default is (10, 80, 1.8).
+The first value control the palette hue value, the second is for the saturation and last,
+the palette color lightness.
+With the variable <cite>hsl_</cite> you can rotate the palette colors and define a new flame
+aspect/color/intensity
+If <cite>adjust_palette_</cite> is True the original palette define by the argument <cite>palette_</cite>, will
+be disregarded.Instead a new palette will be created with the hsl values</p>
+<ul class="simple">
+<li><p>FLAME ORIENTATION / DIRECTION &amp; BORDER FLAME EFFECT</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>input transpose_</strong> = True | False,</div>
+<div class="line"><strong>input border_</strong>    = True | False,</div>
+</div>
+<p><cite>transpose_</cite> = True, this will transpose the final array
+for e.g
+If the final fire texture is (w, h) after setting the transpose flag, the final
+fire texture will become (h, w). As a result the fire effect will be transversal (starting
+from the right of the display to the left side).
+You can always transpose/flip the texture to get the right flame orientation</p>
+<ul class="simple">
+<li><p>BORDER FLAME EFFECT</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>border_</strong> = True | False,</div>
+</div>
+<blockquote>
+<div><p><cite>border_</cite> = True to create a flame effect burning the edge of the display.
+This version is only compatible with symmetrical display or textures (same width &amp; height).
+If the display is asymmetric, the final border fire effect will be shown within the display
+and not neccessary on the frame border</p>
+</div></blockquote>
+<ul class="simple">
+<li><p>FINAL TOUCH</p></li>
+</ul>
+<div class="line-block">
+<div class="line"><strong>input blur_</strong> : True | False</div>
+</div>
+<p>This will will blur the fire effect for a more realistic appearance, remove all the jagged
+edge when and pixelated effect</p>
+<div class="line-block">
+<div class="line">——————————————————————————————</div>
+</div>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><br /></div>
+<div class="line-block">
+<div class="line"><strong>width_</strong>           : integer</div>
+<div class="line-block">
+<div class="line">Size (width) of the surface or display in pixels</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>height_</strong>          : integer</div>
+<div class="line-block">
+<div class="line">size (height) of the surface or display in pixels</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>factor_</strong>          : float</div>
+<div class="line-block">
+<div class="line">Value controlling the fire height value</div>
+<div class="line-block">
+<div class="line">must be in range [3.95 … 4.2].</div>
+<div class="line">The value 3.95 gives the highest flame effect</div>
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="line"><strong>palette_</strong>         : numpy.ndarray</div>
+<div class="line-block">
+<div class="line">buffer containing mapped RGB colors (uint values)</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>fire_</strong>            : numpy.ndarray</div>
+<div class="line-block">
+<div class="line">shape (w, h) containing float values (fire intensity).</div>
+<div class="line">For better performance it is advised to set the array to the size</div>
+<div class="line">of the texture after applying the <cite>reduction_factor_</cite>.</div>
+<div class="line">For example if the <cite>reduction_factor_</cite> is 2, the texture would have</div>
+<div class="line">width &gt;&gt; 1 and height &gt;&gt; 1 and the fire_array should be set to</div>
+<div class="line">numpy.empty((height &gt;&gt; 1, width &gt;&gt; 1), float32)</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>reduce_factor_</strong>   : unsigned short int</div>
+<div class="line-block">
+<div class="line">Can be either 0, 1, 2, 3, 4.</div>
+<div class="line">2 and 3 provide the best performance and the best looking effect.</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>fire_intensity_</strong>  : Integer;</div>
+<div class="line-block">
+<div class="line">Control the original amount of energy at the</div>
+<div class="line">bottom of the fire, must be in range of [0 … 32].</div>
+<div class="line">32 being the maximum value and the maximum fire intensity</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>smooth_</strong>          : boolean;</div>
+<div class="line-block">
+<div class="line">True smoothscale (bi-linear filtering) or</div>
+<div class="line">scale algorithm jagged edges (mush faster)</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>bloom_</strong>           : boolean;</div>
+<div class="line-block">
+<div class="line">True or False, True apply a bloom effect to the fire effect</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>fast_bloom_</strong>      : boolean;</div>
+<div class="line-block">
+<div class="line">Fastest bloom. This reduce the amount of calculation</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>bpf_threshold_</strong>   : integer;</div>
+<div class="line-block">
+<div class="line">control the bright pass filter threshold</div>
+<div class="line">value, must be in range [0 … 255].</div>
+<div class="line">Maximum brightness amplification with threshold = 0,</div>
+<div class="line">when <cite>bpf_threshold_</cite> = 255, no change.</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>low_</strong>             : integer;</div>
+<div class="line-block">
+<div class="line">Starting position x for the fire effect</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><cite>high_</cite>            : integer;</div>
+<div class="line-block">
+<div class="line">Ending position x for the fire effect</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>brightness_</strong>      : boolean;</div>
+<div class="line-block">
+<div class="line">True apply a bright filter shader to the array.</div>
+<div class="line">Increase overall brightness of the effect</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>brightness_intensity_</strong> : float;</div>
+<div class="line-block">
+<div class="line">must be in range [-1.0 … 1.0] control</div>
+<div class="line">the brightness intensity of the effect</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>surface_</strong>         : pygame.Surface.</div>
+<div class="line-block">
+<div class="line">Pass a surface to the shader for</div>
+<div class="line">better performance, otherwise a new surface will be created each</div>
+<div class="line">calls.</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>adjust_palette_</strong>  : boolean;</div>
+<div class="line-block">
+<div class="line">True adjust the palette setting HSL</div>
+<div class="line">(hue, saturation, luminescence).</div>
+<div class="line">Be aware that if adjust_palette is True, the optional palette</div>
+<div class="line">passed to the Shader will be disregarded</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>hsl_</strong>             : tuple;</div>
+<div class="line-block">
+<div class="line">float values of hue, saturation and luminescence.</div>
+<div class="line">Hue in range [0.0 … 100],  saturation [0…100],</div>
+<div class="line">luminescence [0.0 … 2.0]</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>transpose_</strong>       : boolean;</div>
+<div class="line-block">
+<div class="line">Transpose the array (w, h) become (h, w).</div>
+<div class="line">The fire effect will start from the left and move to the right</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>border_</strong>          : boolean;</div>
+<div class="line-block">
+<div class="line">Flame effect affect the border of the texture</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>blur_</strong>            : boolean;</div>
+<div class="line-block">
+<div class="line">Blur the fire effect</div>
+<div class="line"><br /></div>
+</div>
+<div class="line"><strong>return</strong>              :</div>
+<div class="line-block">
+<div class="line">Return a pygame surface that can be blit directly to the game display</div>
+</div>
+</div>
+</div>
+</div></blockquote>
+</div></blockquote>
+</div></blockquote>
+</div>
+
+
+            <div class="clearer"></div>
+          </div>
+      </div>
+        </div>
+        <div class="sidebar">
+          
+          <h3>Table of Contents</h3>
+          
+          <div role="search">
+            <h3 style="margin-top: 1.5em;">Search</h3>
+            <form class="search" action="search.html" method="get">
+                <input type="text" name="q" />
+                <input type="submit" value="Go" />
+            </form>
+          </div>
+
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+    <div class="footer-wrapper">
+      <div class="footer">
+        <div class="left">
+          <div role="navigation" aria-label="related navigaton">
+            <a href="genindex.html" title="General Index"
+              >index</a>
+          </div>
+          <div role="note" aria-label="source link">
+              <br/>
+              <a href="_sources/index.rst.txt"
+                rel="nofollow">Show Source</a>
+          </div>
+        </div>
+
+        <div class="right">
+          
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2021, Yoann Berenguer.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 4.3.1.
+    </div>
+        </div>
+        <div class="clearer"></div>
+      </div>
+    </div>
+
+  </body>
+</html>

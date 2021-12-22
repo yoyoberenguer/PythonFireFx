@@ -1,0 +1,278 @@
+
+
+:mod:`PythonFireFx`
+=====================
+.. currentmodule:: PythonFireFx
+
+|
+
+  .. method:: method shader_fire_effect:
+
+   | *Create a fire effect on your game display, surface or sprite texture*
+   | *shader_fire_effect(surface, width_, height_, factor_, palette_, fire_) -> Surface*
+   |
+   | **Optional arguments**
+   |     `reduce_factor_`        = 3,
+   |     `fire_intensity_`       = 32,
+   |     `smooth_`               = True,
+   |     `bloom_`                = True,
+   |     `fast_bloom_`           = True,
+   |     `bpf_threshold_`        = 0,
+   |     `low_`                  = 0,
+   |     `high_`                 = 600,
+   |     `brightness_`           = True,
+   |     `brightness_intensity_` = 0.15,
+   |     `surface_`              = None,
+   |     `adjust_palette_`       = False,
+   |     `hsl_`                  = (10, 80, 1.8),
+   |     `transpose_`            = False,
+   |     `border_`               = False,
+   |     `blur_`                 = True
+  
+  
+  
+  FIRE SHADER EFFECT OPTIONS
+
+    * FIRE TEXTURE SIZES 
+	
+	
+    | **input width_**  : integer,  
+    | **input height_** : integer
+    
+    `width_` and `height_` values define the size of the texture e.g Surface(width x height)
+
+    * FIRE ASPECT (CONTROL OVER THE WIDTH): 
+    
+    | **inputs low_** : integer  
+    | **input high_** : integer 
+    
+    Optional arguments `low_` & `high_` (integer values) define the width 's limits of the fire effect. 
+    `low_` for the starting point and `high_` for the ending of the effect.
+    e.g `low_` = 10 and `high_` = 200. The fire effect will be contain within width = 10 and 200
+    `low_` & `high_` values must be in range [0 ... `width_`]  
+        
+    * FIRE HEIGHT:
+    
+    | **input factor_** : float
+    
+    The fire maximum height can be adjust with the variable `factor_` (float value)
+    value > 3.95 will contain the effect within the display 
+    value < 3.95 will enlarge the effect over the display height  
+    Recommended value is 3.95 with `reduce_factor_` = 3 otherwise adjust the value manually 
+    to contain the fire effect within the display
+        
+    * SPEED CONSIDERATION
+    
+    | **input reduce_factor_** : integer
+    
+    The argument `reduce_factor_` control the size of the texture to be processed 
+    e.g : a value of 2, divide by 4 the pygame surface define by the values (`width_` & `height_`)
+    Smaller texture improve the overall performances but will slightly degrade the fire aspect, 
+    especially if the blur and smooth option are not enabled.
+    Recommended value for `reduce_factor_` is 3 (fast process)   
+    `reduce_factor_` values must be an integer in range [ 0 ... 4] 
+    The `reduce_factor_` value will have a significant impact on the fire effect maximum height, 
+    adjust the argument `factor_` accordingly
+
+    * FIRE INTENSITY AT THE SOURCE
+    
+    | **input fire_intensity_**: integer
+    
+    Set the fire intensity with the variable `fire_intensity_`, 0 low flame,
+    32 maximum flame effect
+    Values must be an int in range [0 ... 32] 
+
+    * SMOOTHING THE EFFECT
+    
+    | **input smooth_**: True | False
+    
+    When `smooth_` is True the algorithm will use the pygame function smoothscale (bi-linear 
+    filtering) or False the final texture will be adjust with the scale function.
+    Set this variable to False if you need the best performance for the effect or if you require
+    a pixelated fire effect. Otherwise set the variable to True for a more realistic effect. 
+
+    
+    * BLOOM EFFECT 
+    
+    | **input bloom_**         : True | False
+    | **input fast_bloom_**    : True | False
+    | **input bpf_threshold_** : integer
+       
+    Fire effect produce a bright and smooth light effect to the background texture where the fire 
+    intensity is at its maximum.
+    Use the flag `fast_bloom_` for a compromise between a realistic effect and the best performances
+    The flag `fast_bloom_` define a very fast bloom algo using only the smallest texture 
+    to create a bloom effect (all the intermediate textures will be bypassed). See the bloom effect 
+    project for more details.
+    When fast_bloom is False, all the sub-surfaces will be blit to the final effect and will 
+    produce a more realistic fire effect (this will slightly degrade the overall performances). 
+    If the fire effect is too bright, you can always adjust the bright pass filter value
+    `bpf_threshold_`(this will adjust the bloom intensity)
+    `bpf_threshold_` value must be in range [ 0 ... 255]   
+    Below 128 the bloom effect will be more noticeable and above 128 only the brightest
+    area will be enhanced.
+
+    * LIGHT EFFECT INTENSITY
+
+    | **input brightness_**            : True | False
+    | **input brightness_intensity_**  : float
+
+    When the flag is set to True, the algorithm will use an external function, 
+    <shader_brightness24_exclude_inplace_c> to increase the brightness of the effect/texture.
+    A custom color can be passed to the function defining the pixels to be ignored during the 
+    process (default is black color).
+    the value must be in range [-1.0 ... 1.0]. Values below zero will decrease the brightness 
+    of the flame effect and positive values will increase the brightness of the effect (causing
+    bright white patches on the fire texture). 
+    Values below -0.4 will cause the fire effect to be translucent and this effect can also be 
+    used for simulating ascending heat convection effects on a background texture.
+    
+    
+    * OPTIONAL SURFACE
+      
+    | **input surface_** : pygame.Surface
+      
+    This is an optional surface that can be passed to the shader to improve the performances 
+    and to avoid a new surface to be generated every iterations. The surface size must match 
+    exactly the reduce texture dimensions otherwise an exception will be raise. 
+    see `reduce_factor_` option to determine the fire texture size that will be processed.
+    
+    * COLOR PALETTE ADJUSTMENT  
+    
+    | **input adjust_palette_** : True | False
+    | **input `hsl_`**            : (10, 80, 1.8)
+
+    Set this flag to True to modify the color palette of the fire texture. 
+    This allow the HSL color model to be apply to the palette values
+    You can redefine the palette when the flag is True and by customizing a tuple of 3 float 
+    values, default is (10, 80, 1.8). 
+    The first value control the palette hue value, the second is for the saturation and last, 
+    the palette color lightness. 
+    With the variable `hsl_` you can rotate the palette colors and define a new flame
+    aspect/color/intensity
+    If `adjust_palette_` is True the original palette define by the argument `palette_`, will 
+    be disregarded.Instead a new palette will be created with the hsl values
+
+    * FLAME ORIENTATION / DIRECTION & BORDER FLAME EFFECT
+     
+    | **input transpose_** = True | False,
+    | **input border_**    = True | False,
+    
+    `transpose_` = True, this will transpose the final array 
+    for e.g
+    If the final fire texture is (w, h) after setting the transpose flag, the final 
+    fire texture will become (h, w). As a result the fire effect will be transversal (starting 
+    from the right of the display to the left side). 
+    You can always transpose/flip the texture to get the right flame orientation  
+	
+    * BORDER FLAME EFFECT 
+	
+    | **border_** = True | False, 
+	
+	`border_` = True to create a flame effect burning the edge of the display. 
+	This version is only compatible with symmetrical display or textures (same width & height).
+	If the display is asymmetric, the final border fire effect will be shown within the display
+	and not neccessary on the frame border 
+    
+    * FINAL TOUCH
+    
+    | **input blur_** : True | False
+    
+    This will will blur the fire effect for a more realistic appearance, remove all the jagged 
+    edge when and pixelated effect
+	
+    | ------------------------------------------------------------------------------------------
+	
+	|
+	|	**width_**           : integer
+	|		Size (width) of the surface or display in pixels
+	|
+	|	**height_**          : integer
+	|		size (height) of the surface or display in pixels
+	|
+	|	**factor_**          : float 
+	|	    Value controlling the fire height value
+	|		must be in range [3.95 ... 4.2].
+	|		The value 3.95 gives the highest flame effect
+	|
+	|	**palette_**         : numpy.ndarray
+	|		buffer containing mapped RGB colors (uint values)
+	|
+	|	**fire_**            : numpy.ndarray
+	|		shape (w, h) containing float values (fire intensity).
+	|		For better performance it is advised to set the array to the size 
+	|		of the texture after applying the `reduction_factor_`.
+	|		For example if the `reduction_factor_` is 2, the texture would have 
+	|		width >> 1 and height >> 1 and the fire_array should be set to 
+	|		numpy.empty((height >> 1, width >> 1), float32)
+	|
+	|	**reduce_factor_**   : unsigned short int 
+	|		Can be either 0, 1, 2, 3, 4. 
+	|		2 and 3 provide the best performance and the best looking effect.
+	|
+	|	**fire_intensity_**  : Integer; 
+	|		Control the original amount of energy at the
+	|		bottom of the fire, must be in range of [0 ... 32]. 
+	|		32 being the maximum value and the maximum fire intensity
+	|
+	|	**smooth_**          : boolean; 
+	|		True smoothscale (bi-linear filtering) or
+	|		scale algorithm jagged edges (mush faster)
+	|
+	|	**bloom_**           : boolean; 
+	|		True or False, True apply a bloom effect to the fire effect
+	|
+	|	**fast_bloom_**      : boolean; 
+	|		Fastest bloom. This reduce the amount of calculation
+	|
+	|	**bpf_threshold_**   : integer; 
+	|		control the bright pass filter threshold
+	|		value, must be in range [0 ... 255].
+	|		Maximum brightness amplification with threshold = 0, 
+	|		when `bpf_threshold_` = 255, no change.
+	|
+	|	**low_**             : integer; 
+	|		Starting position x for the fire effect
+	|
+	|	`high_`            : integer;
+	|		Ending position x for the fire effect
+	|
+	|	**brightness_**      : boolean; 
+	|		True apply a bright filter shader to the array.
+	|		Increase overall brightness of the effect
+	|
+	|	**brightness_intensity_** : float; 
+	|		must be in range [-1.0 ... 1.0] control
+	|		the brightness intensity of the effect
+	|
+	|	**surface_**         : pygame.Surface.
+	|		Pass a surface to the shader for
+	|		better performance, otherwise a new surface will be created each 
+	|		calls.
+	|
+	|	**adjust_palette_**  : boolean; 
+	|		True adjust the palette setting HSL
+	|		(hue, saturation, luminescence).
+	|		Be aware that if adjust_palette is True, the optional palette 
+	|		passed to the Shader will be disregarded
+	|
+	|	**hsl_**             : tuple;
+	|		float values of hue, saturation and luminescence.
+	|		Hue in range [0.0 ... 100],  saturation [0...100], 
+	|		luminescence [0.0 ... 2.0]
+	|
+	|	**transpose_**       : boolean;
+	|		Transpose the array (w, h) become (h, w).
+	|		The fire effect will start from the left and move to the right
+	|
+	|	**border_**          : boolean;
+	|		Flame effect affect the border of the texture
+	|
+	|	**blur_**            : boolean;
+	|		Blur the fire effect
+	|
+	|	**return**              : 
+	|		Return a pygame surface that can be blit directly to the game display
+
+  .. ## shader.shader_fire_effect ## 
+  
