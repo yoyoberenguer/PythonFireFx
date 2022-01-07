@@ -1,14 +1,14 @@
 # PythonFireFx
 
 PythonFireFx is a shader for rendering 2D realistic fire effect (procedural fire).
-Written in `python`, `cython` and `C` language, it is design for 
+Written in `python`, `cython` and `C` languages.It is design for 
 `real time rendering` on pygame surface with screen resolution up
 to `1280 x 1024 pixels`. 
 
 Compatible with image format 24-32 bit with any of the following extension:
 BMP, GIF (non - animated), JPEG, PNG image format.
 
-It was originally designed for 2D video games application build on the
+It was originally designed for 2D video games application build on
 top of Pygame library, but it can also be used as a plugin for 
 `video` or `webcam special effect`. It requires few libraries in order 
 to work, please see the dependency section for more details.
