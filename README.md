@@ -30,7 +30,7 @@ produce a more realistic fire effect:
   colors defined by HSL (hue, saturation and luminescence values) that can 
   also be set dynamically to change the colors overtime
 - Border flames (option to burn only the side of the screen/texture). This 
-  option is designed to work with symmetrical surface (same with and length)
+  option is designed to work with symmetrical surface (same width and height)
 
 ## Tested under windows x64 platform.
 
