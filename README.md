@@ -1,5 +1,10 @@
 # PythonFireFx
 
+<p align="center">
+    <img src="https://github.com/yoyoberenguer/PythonFireFx/blob/main/fire.gif?raw=true">
+</p>
+
+
 PythonFireFx is a shader for rendering 2D realistic fire effect (procedural fire).
 Written in `python`, `cython` and `C` languages.It is design for 
 `real time rendering` on pygame surface with screen resolution up
